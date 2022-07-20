@@ -18,6 +18,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 
 
+
 def is_users(post_user, logged_user):
     return post_user == logged_user
 
@@ -119,7 +120,12 @@ class PostDetailView(DetailView):
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
-
+    '''
+        create the context dictionary for fetching the user details
+    '''
+    context_dict = {
+        'userDetails' : model
+    }
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         comments_connected = Comment.objects.filter(post_connected=self.get_object()).order_by('-date_posted')
